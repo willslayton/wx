@@ -104,7 +104,8 @@ ast_t* parser_parse_id(parser_t* parser) {
 
 // Function to parse expressions
 ast_t* parser_parse_expression(parser_t* parser) {
-    printf("%s", token_to_string(parser->token));
+    
+    //printf("%s", token_to_string(parser->token));
 
     // Switch on the type of token recieved
     switch(parser->token->type) {
