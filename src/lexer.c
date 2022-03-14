@@ -69,14 +69,15 @@ token_t* lexer_next_token(lexer_t* lexer) {
         // Skip whitespace
         lexer_skip_whitespace(lexer);
 
-        // If it is alphanumeric, find the id
-        if(isalnum(lexer->c)) {
-            return lexer_parse_id(lexer);
-        }
         // If it is numeric, find the id
         if(isdigit(lexer->c)) {
             return lexer_parse_number(lexer);
         }
+        // If it is alphanumeric, find the id
+        if(isalnum(lexer->c)) {
+            return lexer_parse_id(lexer);
+        }
+
         // Otherwise we use a switch statement to select for different tokens
         switch(lexer->c){
             case '=':
