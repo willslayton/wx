@@ -19,6 +19,7 @@ lexer_t* init_lexer(char* source);
 void lexer_advance(lexer_t* lexer);
 char lexer_peek(lexer_t* lexer, int offset);
 void lexer_skip_whitespace(lexer_t* lexer);
+void lexer_skip_line(lexer_t* lexer);
 token_t* lexer_next_token(lexer_t* lexer);
 token_t* lexer_parse_string(lexer_t* lexer);
 token_t* lexer_parse_number(lexer_t* lexer);

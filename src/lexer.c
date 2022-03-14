@@ -61,6 +61,13 @@ void lexer_skip_whitespace(lexer_t* lexer) {
     }
 }
 
+// Function to skip every character until a newline, used for comments
+void lexer_skip_line(lexer_t* lexer) {
+    while(lexer->c != '\n') {
+        lexer_advance(lexer);
+    }
+}
+
 // Function to get the next token in the source
 token_t* lexer_next_token(lexer_t* lexer) {
     
@@ -80,6 +87,9 @@ token_t* lexer_next_token(lexer_t* lexer) {
 
         // Otherwise we use a switch statement to select for different tokens
         switch(lexer->c){
+            case '#':
+                lexer_skip_line(lexer);
+                break;
             case '=':
                 return lexer_advance_with_current(lexer, TOKEN_EQUALS);
             case '>':
