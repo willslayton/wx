@@ -12,8 +12,8 @@ b = "hello"
 function test(arg1, arg2) {
     
     # Expressions of basic operators can be processed
-    c = a * 2
+    c = a * 2 + 1
 
     # Return statements can use expressions or nothing (defaults to int_value 0)
-    return 1
+    return
 }
