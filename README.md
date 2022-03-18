@@ -24,4 +24,5 @@ The goal of wx is to provide low level access to data while utilizing some of my
 - Functions
     - Definition with keyword "function".
     - Code is run sequentially, and then based on function calls, meaning no main function is needed.
+
 ...and more to come as I implement it!
