@@ -3,7 +3,6 @@
 
 // The tokens which form our grammar are defined in this struct
 typedef struct TOKEN {
-    // We enumerate the different tokens as different types
     enum {
         // Keywords
         TOKEN_ID,
@@ -14,11 +13,17 @@ typedef struct TOKEN {
 
         // Symbols
         TOKEN_EQUALS,
-        TOKEN_LESSTHAN,
-        TOKEN_GREATERTHAN,
         TOKEN_COMMA,
         TOKEN_COLON,
         TOKEN_SEMICOLON,
+
+        // Operands
+        TOKEN_PLUS,
+        TOKEN_MINUS,
+        TOKEN_ASTERISK,
+        TOKEN_SLASH,
+        TOKEN_LESSTHAN,
+        TOKEN_GREATERTHAN,
 
         // Grouping characters
         TOKEN_OPENCURLYBRACKET,
@@ -29,11 +34,12 @@ typedef struct TOKEN {
         TOKEN_CLOSEPARENTHESIS,
         
         // Special
+        TOKEN_STATEMENT,
         TOKEN_NEWLINE,
         TOKEN_EOF
     } type;
 
-    // The value of that token when being lexed is stored as a string
+    // The value of that token is stored as a string
     char* value;
 } token_t;
 

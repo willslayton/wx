@@ -6,14 +6,11 @@
 // Initialization function for our tokens
 token_t* init_token(int type, char* value) {
 
-    // Allocate space for the token data structure
     token_t* token = calloc(1, sizeof(struct TOKEN));
 
-    // Set members of struct to passed value
     token->type = type;
     token->value = value;
 
-    // Return our created token
     return token;
 }
 

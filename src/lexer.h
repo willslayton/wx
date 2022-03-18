@@ -4,13 +4,11 @@
 
 // This struct is the basis of our lexer
 typedef struct LEXER {
-    // source is the string of the program file
     char* source;
-    // source_size is the length of the contents
     int source_size;
-    // c is the current character
+
+    // c is the current char and i is the current index in the source
     char c;
-    // i is the current index in the contents
     unsigned int i;
 
 } lexer_t;
