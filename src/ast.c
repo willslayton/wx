@@ -4,17 +4,19 @@
 
 // Initialization function for our AST node
 ast_t* init_ast(int type) {
-    // Allocate space for the AST data structure
     ast_t* ast = calloc(1, sizeof(struct AST));
 
-    // Set members of struct to passed value
     ast->type = type;
 
+    // Our compound nodes are the only ones which need to have children
+    // I wonder if I could use this for binops to save on memory
     if(type == AST_COMPOUND) {
         ast->children = init_list(sizeof(struct AST*));
     }
 
-    // Return our created AST node
+    ast->multiplier = 1;
+    ast->dtype = DATA_TYPE_UNKNOWN;
+
     return ast;
 }
 
@@ -24,23 +26,28 @@ void ast_traverse(ast_t* node, int level) {
     // Starting level 0 for root
     if(level == 0) {
         printf("\n== PROGRAM AST ==\n");
-    }
+    } else {
+        // Print tree-like characters to show level structure
+        for(int i = 0; i < (level - 1); i++) {
+            if(i == 0) {
+                printf(" |-");
+            } else {
+                printf("---");
+            }
+        }
 
-    // Print tree-like characters to show level structure
-    for(int i = 0; i < level; i++) {
-        if(i == 0) {
-            printf(" |-");
+        // Enumerated node type is printed, denoted by [type]
+        printf("[%d]", node->type);
+        if(node->value) {
+            printf(":{%d}\n", node->value->type);
         } else {
-            printf("---");
+            printf("\n");
         }
     }
 
-    // Enumerated node type is printed, denoted by [type]
-    printf("[%d]\n", node->type);
-
     // Check for compound node, since these are the only nodes with children
-    // Without this check we fall into infinite recursion (although it may not seem like it)
-    if(node->type == AST_COMPOUND) {
+    // Without this check we somehow fall into infinite recursion (although it shoudln't?)
+    if(node->type == AST_COMPOUND || node->type == AST_FUNCTION) {
         // For each of the children recurse on this function
         for(int i = 0; i < node->children->size; i++) {
             ast_traverse(node->children->items[i], level + 1);

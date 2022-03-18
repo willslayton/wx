@@ -2,17 +2,20 @@
 #define AST_H
 #include <stdlib.h>
 #include "list.h"
+#include "types.h"
 
 // To parse the file an abstract syntax tree needs to be build
-// This struct implements an AST which we can use with the parser
 typedef struct AST {
-    // The types of syntax expressions are enumerated
     enum {
         // Special
         AST_COMPOUND,
         AST_NOP,
+        AST_BINOP,
+        AST_ACCESS,
+        AST_STATEMENT_RETURN,
 
         // Assignment or definition
+        AST_DEFINITION_TYPE,
         AST_ASSIGNMENT,
         AST_FUNCTION,
         
@@ -29,10 +32,21 @@ typedef struct AST {
     // For each type we assign appropriate members, some of which building our recursive tree structure
     list_t* children;
     char* name;
+    
+    // This group is used for binops! Redundant! I don't know how else to do it!
+    struct AST* left;
+    struct AST* right;
+    int id;
+    int op;
+
+    int stack_index;
+    int multiplier;
+    data_type dtype;
     struct AST* value;
+
+    // These literals for the values should ONLY be temporary... but I don't know how to properly implement
     int int_value;
     char* string_value;
-    int data_type;
 
 } ast_t;
 
