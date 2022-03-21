@@ -8,7 +8,7 @@
 char* asm_f_start(ast_t* node) {
     
     // This const will hold the template for the main function call
-    const char* section = "global _WinMain@16\nsection .text\n_WinMain@16:\n%s\nmov ebx, eax\nmov eax, 1\nret\n\n";
+    const char* section = ASM_MAIN_SECTION;
 
     char* value = calloc((strlen(section) + 1), sizeof(char));
     strcpy(value, section);

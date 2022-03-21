@@ -39,7 +39,6 @@ static char* sh(char* cmd) {
     }
 
     pclose(file);
-    free(cmd);
 
     return output;
 }
@@ -47,7 +46,6 @@ static char* sh(char* cmd) {
 // Function: wx compile
 char* wxcompile(char* source) {
     
-
     lexer_t* lexer = init_lexer(source);
 
     printf("Lexing...\n");
@@ -70,18 +68,28 @@ char* wxcompile(char* source) {
 void wxfcompile(char* input, char* output) {
     if(!strlen(output)) {
         output = calloc(strlen(input), sizeof(char));
-        strncpy(output, input, strlen(input) - 2);
-        strcat(output, "s");
+        strncpy(output, input, strlen(input) - 3);
+        if(strcmp(OS, "WIN") == 0) {
+            strcat(output, ".exe");
+        }
     }
+    char* copy = "cp temp.exe ";
+    char* rename = calloc((strlen(COPY_COMMAND_PORTION) + strlen(output) + 1), sizeof(char));
+    strcat(rename, COPY_COMMAND_PORTION);
+    strcat(rename, output);
     
     printf("Reading from file...\n");
     char* source = read_file(input);
     char* assembly = wxcompile(source);
-    sh("mkdir temp");
-    write_file("temp/a.s", assembly);
-    sh("nasm -f win32 temp/a.s -o temp/a.o");
-    sh("gcc temp/a.o -o a.exe");
-    //sh("rmdir temp");
+    write_file("temp.s", assembly);
+    
+    // Assembling and linking
+    sh(COMPILE_COMMAND);
+    sh("gcc -nostdlib -m64 temp.o -o temp.exe");
+
+    // Rename executible and clean up files
+    sh(rename);
+    sh(CLEAN_COMMAND);
 
     printf("Freeing allocated resources...\n");
     free(source);

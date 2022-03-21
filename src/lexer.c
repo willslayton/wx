@@ -123,7 +123,7 @@ token_t* lexer_next_token(lexer_t* lexer) {
                 printf("lexEOF\n");
                 return init_token(TOKEN_EOF, 0);
             default:
-                printf("Unexpected character: %s\n", lexer->c);
+                printf("Unexpected character: %c\n", lexer->c);
                 exit(1);
                 break;
         }

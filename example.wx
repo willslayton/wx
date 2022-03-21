@@ -1,0 +1,19 @@
+# This is a comment!
+# Comments start with a '#' and then terminate at the newline
+
+# No main function is needed, the program is entirely a main function
+# Newlines are used to complete a line of code
+
+# Primitive data types of string and int exist
+a = 123
+b = "hello"
+
+# Functions are defined using the "function" keyword
+function test(arg1, arg2) {
+    
+    # Expressions of basic operators can be processed
+    c = a * 2 + 1
+
+    # Return statements can use expressions or nothing (defaults to int_value 0)
+    return
+}
