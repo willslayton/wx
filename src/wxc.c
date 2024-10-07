@@ -100,9 +100,7 @@ void wxfcompile(char* input, char* output) {
 // This is probably absolutely horrible for memory but oh well
 char* read_file(const char* filename) {
     FILE* file;
-    char* line = NULL;
-    size_t length = 0;
-    ssize_t read;
+    char* line = (char*)calloc(1, 1024 * sizeof(char));
 
     file = fopen(filename, "rb");
     if(file == NULL) {
@@ -113,7 +111,7 @@ char* read_file(const char* filename) {
     char* buffer = (char*)calloc(1, sizeof(char));
     buffer[0] = '\0';
 
-    while((read = getline(&line, &length, file)) != -1) {
+    while(fgets(line, sizeof(line), file) != NULL) {
         buffer = (char*)realloc(buffer, (strlen(buffer) + strlen(line) + 1) * sizeof(char));
         strcat(buffer, line);
     }
